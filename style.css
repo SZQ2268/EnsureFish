@@ -1,0 +1,81 @@
+/* ===== 全局重置 ===== */
+body {
+  margin: 0;
+  padding-top: 60px;        /* 给固定顶栏留出空间，等于顶栏高度 */
+  font-family: system-ui, -apple-system, "PingFang SC", sans-serif;
+  color: #333;
+}
+
+p, h1, ul {
+  margin: 0;                /* 清掉浏览器默认外边距 */
+}
+
+ul {
+  padding: 0;
+  list-style: none;         /* 去掉 li 的小圆点 */
+}
+
+/* ===== 顶栏 ===== */
+.top_bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+/* Logo 是 <p>，单独调它的样式 */
+.top_bar p {
+  font-size: 18px;
+  font-weight: bold;
+  color: #111;
+}
+
+/* 菜单：让 li 横排 */
+.top_bar ul {
+  display: flex;
+  gap: 24px;
+}
+
+.top_bar a {
+  color: #333;
+  text-decoration: none;    /* 去掉链接下划线 */
+  font-size: 15px;
+}
+
+.top_bar a:hover {
+  color: #0066ff;
+}
+
+/* ===== 内容区 ===== */
+.big_card {
+  /* 想加外边距、圆角、阴影的话写这里，先留空也行 */
+}
+
+.home {
+  padding: 48px 24px;
+}
+
+.home h1 {
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+.home p {
+  color: #666;
+}
+
+/* ===== 页脚 ===== */
+footer {
+  padding: 24px;
+  text-align: center;
+  color: #888;
+  font-size: 14px;
+}
