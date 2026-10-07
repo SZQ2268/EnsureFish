@@ -3,27 +3,156 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#ffffff" />
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('theme');
+        var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = (saved === 'light' || saved === 'dark')
+          ? saved
+          : (systemDark ? 'dark' : 'light');
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+      } catch (e) {}
+    })();
+  </script>
   <title>EnsureFish</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <button class="theme-toggle" id="themeToggle" type="button"
+          aria-label="切换深色模式" title="切换深色模式">
+    <span id="themeIcon">🌙</span>
+  </button>
+  <!--置顶栏-->
   <div class="top_bar">
   <p>EF</p>
   <ul>
-  <li><a href="#">首页</a></li>
-  <li><a href="#"></a>内容</li>
-  <li><a href="#"></a>内容</li>
+  <li><a href="#">🏠 首页</a></li>
+  <li><a href="#gallery">🌁 画廊</a></li>
+  <li><a href="#fursona">🪪 设子</a></li>
+  <li><a href="#contact">☎️ 联系</a></li>
   </ul>
   </div>
+  <!--大卡片，用于CSS-->
   <div class="big_card">
-  <div class="home">
+  <main>
+  <div class="text">
+    <!--主页内容-->
     <h1>因硕贝贝 的官网！</h1>
     <p>至善 · 至美</p>
-    <p>网站处于测试版！</p>
+    <p>你好，我叫 因硕贝贝 (EnsureFish)！一个Furry呀！</p>
+    <p>我平时会在<a href="https://bilibili.com">Bilibili</a>，抖音 上发布视频。</p>
+    <p>如果你也喜欢我制作的视频，也可以<a href="#contact">加入我们</a>呀！</p>
   </div>
+  <div class="text" id="gallery">
+    <h2>🌁 画廊</h2>
+    <p>这是我拍摄的照片</p>
+    <div id="gallery_1"></div>
+  </div>
+  <div class="text" id="fursona">
+    <h2>🪪 设定展示</h2>
+    <p>这是我的自设！</p>
+    <div id="gallery_2"></div>
+  </div>
+  <div class="text" id="contact">
+    <h2>☎️ 联系我们</h2>
+    <p>如果你喜欢我们的作品或对我们的作品有意见或建议，欢迎联系我们！</p>
+    <ul>
+      <li><a href="https://qun.qq.com/universal-share/share?ac=1&authKey=fGtbNWB8%2BhKvTCtJYaZNSEK3AADbcnYSFBR2N4G%2BbuwLK4mECunrBGglQWTHFO%2BW&busi_data=eyJncm91cENvZGUiOiI5MDMzOTMwMTIiLCJ0b2tlbiI6IkhKUUROWmxlODdkU09Yc29kbXZsZU9yMGdjTFF4S201TFp3UFlXeFl3c1BWNy9Ha0dMMXNldVJnTjVpR1VmdEIiLCJ1aW4iOiIxNTkwMjE5Mjk5In0%3D&data=HEM42gnyhhyVTzVLpcSByTM01UmutHzFWJ4dZpioxN8xyL_9owW5aiCp0expp3ZQNybie4vvs7OkYfc91cnGsQ&svctype=4&tempid=h5_group_info">🐧 QQ交流群</a></li>
+      <li><a href="https://github.com/SZQ2268/EnsureFish">🐱 GitHub仓库</a></li>
+    </ul>
+  </div>
+  </main>
+  <!--页脚-->
   <footer>
   <p>2026 &copy; 保留所有权利</p>
+  <p>感谢 <a href="https://github.com/SZQ2268">沈志清</a> 提供技术支持</p>
   </footer>
   </div>
 </body>
+  <script>
+    (function () {
+      var STORAGE_KEY = 'theme';
+      var root = document.documentElement;
+      var mql = window.matchMedia('(prefers-color-scheme: dark)');
+      var btn = document.getElementById('themeToggle');
+      var icon = document.getElementById('themeIcon');
+
+      function getSaved() {
+        try { return localStorage.getItem(STORAGE_KEY); } catch (e) { return null; }
+      }
+
+      function setSaved(value) {
+        try {
+          if (value === null) localStorage.removeItem(STORAGE_KEY);
+          else localStorage.setItem(STORAGE_KEY, value);
+        } catch (e) {}
+      }
+
+      // mode: 'light' | 'dark' | 'system'
+      function apply(mode) {
+        var resolved = mode === 'system'
+          ? (mql.matches ? 'dark' : 'light')
+          : mode;
+
+        root.dataset.theme = resolved;
+        root.style.colorScheme = resolved;
+
+        // 同步浏览器地址栏/状态栏颜色
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.content = resolved === 'dark' ? '#0f1115' : '#ffffff';
+
+        if (icon) icon.textContent = resolved === 'dark' ? '☀️' : '🌙';
+        if (btn) {
+          btn.setAttribute('aria-label',
+            resolved === 'dark' ? '切换到浅色模式' : '切换到深色模式');
+        }
+      }
+
+      // 按钮：在 亮 / 暗 之间切换（写入 localStorage，覆盖系统设置）
+      if (btn) {
+        btn.addEventListener('click', function () {
+          var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+          setSaved(next);
+          apply(next);
+        });
+      }
+
+      // 用户没手动选过时，跟随系统变化实时切换
+      mql.addEventListener('change', function () {
+        if (!getSaved()) apply('system');
+      });
+
+      // 页面加载时同步一次（内联脚本已设好，这里只是补齐按钮图标等）
+      apply(getSaved() || 'system');
+    })();
+  </script>
+  <script>
+    function renderImages(box, list) {
+      if (!box) return;
+        if (!Array.isArray(list) || list.length === 0) {
+        box.textContent = '暂时没有图片';
+        return;
+      }
+      box.innerHTML = list.map(function (url) {
+        return '<img src="' + url + '" alt="" loading="lazy">';
+      }).join('');
+    }
+
+    fetch('./images.json')
+      .then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        renderImages(document.getElementById('gallery_1'), data.gallery);
+        renderImages(document.getElementById('gallery_2'), data.fursona);
+      })
+      .catch(function (err) {
+        console.error('加载失败：', err);
+      });
+  </script>
 </html>
