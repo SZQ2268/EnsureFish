@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://ensurefish.pages.dev/sitemap.xml
