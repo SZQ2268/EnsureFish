@@ -9,56 +9,54 @@
   'use strict';
 
   var STORAGE_KEY = 'theme';
+  var THEME_COLORS = { light: '#ffffff', dark: '#0f1115' };
   var root = document.documentElement;
   var mql = window.matchMedia('(prefers-color-scheme: dark)');
   var meta = document.querySelector('meta[name="theme-color"]');
   var btn = document.getElementById('themeToggle');
   var icon = document.getElementById('themeIcon');
 
-  /* 读取用户手动选择的主题；非法值一律视为「未选择」 */
-  function readSaved() {
-    try {
-      var v = localStorage.getItem(STORAGE_KEY);
-      return (v === 'light' || v === 'dark') ? v : null;
-    } catch (e) {
-      return null;
-    }
+  /* 缓存手动选择，避免每次读写 localStorage */
+  var saved = null;
+  try {
+    var v = localStorage.getItem(STORAGE_KEY);
+    saved = (v === 'light' || v === 'dark') ? v : null;
+  } catch (e) {}
+
+  function resolveTheme() {
+    return saved || (mql.matches ? 'dark' : 'light');
   }
 
-  function writeSaved(value) {
+  function persist(value) {
+    saved = value;
     try {
       if (value) localStorage.setItem(STORAGE_KEY, value);
       else localStorage.removeItem(STORAGE_KEY);
-    } catch (e) { /* 隐私模式下可能失败，忽略 */ }
-  }
-
-  /* 唯一数据源：手动选择优先，否则跟随系统 */
-  function resolveTheme() {
-    return readSaved() || (mql.matches ? 'dark' : 'light');
+    } catch (e) { /* 隐私模式忽略 */ }
   }
 
   function apply(theme) {
     root.dataset.theme = theme;
     root.style.colorScheme = theme;
-    if (meta) meta.content = theme === 'dark' ? '#0f1115' : '#ffffff';
+    if (meta) meta.content = THEME_COLORS[theme];
     if (icon) icon.textContent = theme === 'dark' ? '☀️' : '🌙';
     if (btn) {
-      btn.setAttribute('aria-label',
-        theme === 'dark' ? '切换到浅色模式' : '切换到深色模式');
+      var label = theme === 'dark' ? '切换到浅色模式' : '切换到深色模式';
+      btn.setAttribute('aria-label', label);
+      btn.title = label;
     }
   }
 
   if (btn) {
     btn.addEventListener('click', function () {
       var next = resolveTheme() === 'dark' ? 'light' : 'dark';
-      writeSaved(next);   // 写入后即覆盖系统设置
+      persist(next);
       apply(next);
     });
   }
 
-  /* 用户没手动选过时，实时跟随系统 */
   function onSystemChange() {
-    if (!readSaved()) apply(mql.matches ? 'dark' : 'light');
+    if (!saved) apply(mql.matches ? 'dark' : 'light');
   }
   if (typeof mql.addEventListener === 'function') {
     mql.addEventListener('change', onSystemChange);
@@ -66,7 +64,6 @@
     mql.addListener(onSystemChange);
   }
 
-  /* 补齐首屏图标 / aria 状态 */
   apply(resolveTheme());
 })();
 
@@ -79,28 +76,51 @@
     { id: 'gallery_2', key: 'fursona' }
   ];
 
+  /* 页面没有画廊容器（如 404）则直接跳过，避免无谓请求 */
+  var hasGallery = TARGETS.some(function (t) {
+    return document.getElementById(t.id);
+  });
+  if (!hasGallery) return;
+
+  /* 兼容「字符串」与「{ src, alt }」两种 JSON 写法 */
+  function normalize(item, index) {
+    if (typeof item === 'string') {
+      var s = item.trim();
+      return s ? { src: s, alt: '图片 ' + (index + 1) } : null;
+    }
+    if (item && typeof item === 'object' && typeof item.src === 'string' && item.src.trim()) {
+      return { src: item.src.trim(), alt: item.alt || ('图片 ' + (index + 1)) };
+    }
+    return null;
+  }
+
+  function createImage(info) {
+    var img = document.createElement('img');
+    img.src = info.src;
+    img.alt = info.alt;
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    img.addEventListener('error', function () {
+      img.classList.add('is-error');   // 降透明度 + 灰度，保留布局
+      img.alt += '（加载失败）';
+    });
+    return img;
+  }
+
   function renderImages(box, list) {
     if (!box) return;
     box.textContent = '';
 
-    if (!Array.isArray(list) || list.length === 0) {
+    var items = Array.isArray(list) ? list.map(normalize).filter(Boolean) : [];
+    if (items.length === 0) {
       box.textContent = '暂时没有图片';
       return;
     }
 
     var frag = document.createDocumentFragment();
-    list.forEach(function (url) {
-      if (typeof url !== 'string' || url.trim() === '') return;
-
-      var img = document.createElement('img');
-      img.src = url;
-      img.alt = '';
-      img.loading = 'lazy';
-      img.decoding = 'async';
-      img.addEventListener('error', function () { img.remove(); });
-      frag.appendChild(img);
+    items.forEach(function (info) {
+      frag.appendChild(createImage(info));
     });
-
     box.appendChild(frag);
   }
 

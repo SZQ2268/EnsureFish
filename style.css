@@ -1,5 +1,6 @@
 /* ===== 1. 主题变量 ===== */
 :root {
+  --topbar-h: 60px;
   --bg: #ffffff;
   --bg-subtle: #f5f5f7;
   --text: #1a1a1a;
@@ -7,6 +8,7 @@
   --border: #e5e7eb;
   --accent: #2563eb;
   --shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
 html[data-theme='dark'] {
@@ -17,145 +19,97 @@ html[data-theme='dark'] {
   --border: #2a2f3a;
   --accent: #60a5fa;
   --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
 }
 
 /* ===== 2. 全局重置 ===== */
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 #gallery, #fursona, #contact {
-  scroll-margin-top: 60px;
+  scroll-margin-top: calc(var(--topbar-h) + 12px);
 }
 
 body {
   margin: 0;
-  padding-top: 60px;        /* 给固定顶栏留出空间，等于顶栏高度 */
+  padding-top: var(--topbar-h);
   min-height: 100vh;
   background: var(--bg);
   color: var(--text);
-  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
-  /* 过渡让切换更柔和；注意首次加载时可能有一瞬间的过渡 */
+  font-family: system-ui, -apple-system, 'Segoe UI', 'Noto Sans SC', sans-serif;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-p, h1, h2, ul {
-  margin: 0;                /* 清掉浏览器默认外边距 */
+/* 英文页面使用 Comic Neue（无需 HTML 内联样式） */
+body:lang(en) {
+  font-family: 'Comic Neue', 'Comic Sans MS', cursive;
 }
 
-ul {
-  padding: 0;
-}
+p, h1, h2, ul { margin: 0; }
+ul { padding: 0; }
 
 a {
   color: var(--accent);
+  text-underline-offset: 2px;
 }
 
-.muted {
-  color: var(--text-muted);
-}
+/* 404 页无顶栏，取消顶部占位 */
+body.page-404 { padding-top: 0; }
 
-/* ===== 3. 顶栏 ===== */
+/* ===== 3. 跳过导航（无障碍） ===== */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 8px;
+  padding: 8px 16px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 6px;
+  z-index: 999;
+  text-decoration: none;
+}
+.skip-link:focus { left: 16px; }
+
+/* ===== 4. 顶栏 ===== */
 .top_bar {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
+  top: 0; left: 0; right: 0;
+  height: var(--topbar-h);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 16px;
   padding: 0 24px;
   background: var(--bg);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   z-index: 100;
 }
 
-/* Logo 是 <p>，单独调它的样式 */
-.top_bar p {
+.top_bar .logo {
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 700;
   color: var(--text);
+  text-decoration: none;
 }
 
-/* 菜单：让 li 横排 */
+.top_bar nav { margin-left: auto; }
+
 .top_bar ul {
   display: flex;
   gap: 24px;
-  list-style: none;         /* 去掉 li 的小圆点 */
+  list-style: none;
 }
 
 .top_bar a {
   color: var(--text);
-  text-decoration: none;    /* 去掉链接下划线 */
+  text-decoration: none;
   font-size: 15px;
+  transition: color 0.15s ease;
 }
+.top_bar a:hover { color: var(--accent); }
 
-.top_bar a:hover {
-  color: var(--accent);
-}
-
-/* ===== 4. 大卡片 ===== */
-.big_card {
-  max-width: 900px;           /* 卡片宽度 */
-  margin: 24px auto 48px;     /* 上 24、左右自动居中、下 48 */
-  background: var(--bg-subtle); /* 卡片底色，随主题变化 */
-  border-radius: 16px;        /* 圆角 */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);  /* 阴影 */
-  overflow: hidden;           /* 让内部元素不超出圆角 */
-}
-
-html[data-theme='dark'] .big_card {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
-}
-
-/* ===== 5. 内容区 ===== */
-.text {
-  padding: 48px 24px;
-}
-
-.text h1 {
-  font-size: 32px;
-  margin-bottom: 16px;
-}
-
-.text p {
-  color: var(--text-muted);
-}
-
-/* 通用窄容器 + 小卡片（来自第二段代码） */
-.wrap {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 48px 24px;
-}
-
-.card {
-  background: var(--bg-subtle);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: var(--shadow);
-}
-
-/* ===== 6. 页脚 ===== */
-footer {
-  padding: 24px;
-  text-align: center;
-  color: var(--text-muted);
-  font-size: 14px;
-}
-
-/* ===== 7. 主题切换按钮 ===== */
-/* 顶栏固定在顶部且高度 60px，所以按钮下移一行，避免被顶栏遮挡或压住菜单 */
+/* ===== 5. 主题切换按钮（现在位于顶栏内） ===== */
 .theme-toggle {
-  position: fixed;
-  top: 76px;                /* 60px 顶栏 + 16px 间距 */
-  right: 16px;
   width: 40px;
   height: 40px;
   display: grid;
@@ -168,34 +122,106 @@ footer {
   font-size: 18px;
   line-height: 1;
   transition: background-color 0.2s ease, border-color 0.2s ease;
-  z-index: 90;
 }
-
-.theme-toggle:hover {
-  border-color: var(--accent);
-}
-
+.theme-toggle:hover { border-color: var(--accent); }
 .theme-toggle:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
-/* 图片在暗色下稍微降低亮度，避免刺眼 */
-html[data-theme='dark'] img:not([data-no-dim]) {
-  filter: brightness(0.9);
+/* ===== 6. 大卡片 ===== */
+.big_card {
+  max-width: 900px;
+  margin: 24px auto 48px;
+  background: var(--bg-subtle);
+  border-radius: 16px;
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
 }
-#gallery_1,
-#gallery_2 {
+
+/* ===== 7. 内容区 ===== */
+.text { padding: 48px 24px; }
+
+.text h1 { font-size: 32px; margin-bottom: 16px; }
+.text h2 { font-size: 22px; margin-bottom: 12px; }
+.text p { color: var(--text-muted); }
+
+/* 相邻段落/标题间距 */
+.text p + p,
+.text h2 + p,
+.text p + .gallery { margin-top: 10px; }
+
+/* 联系列表 */
+.contact-list {
+  list-style: none;
+  margin-top: 12px;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* 通用窄容器 + 小卡片 */
+.wrap { max-width: 640px; margin: 0 auto; padding: 48px 24px; }
+.card {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+/* ===== 8. 页脚 ===== */
+footer {
+  padding: 24px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+footer p + p { margin-top: 6px; }
+
+/* ===== 9. 画廊（修复 object-fit 失效问题） ===== */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 8px;
   margin-top: 12px;
 }
 
-#gallery_1 img,
-#gallery_2 img {
-  width: 200px;
-  height: auto;
-  border-radius: 8px;
+.gallery img {
+  width: 100%;
+  aspect-ratio: 1 / 1;       /* 配合 object-fit 才能真正裁剪 */
   object-fit: cover;
+  border-radius: 8px;
+  background: var(--border);
+  transition: opacity 0.3s ease;
+}
+
+.gallery img.is-error {
+  opacity: 0.4;
+  filter: grayscale(1);
+}
+
+/* 暗色下轻度降亮，仅作用于画廊，不影响其他 img */
+html[data-theme='dark'] .gallery img:not(.is-error) {
+  filter: brightness(0.92);
+}
+
+/* ===== 10. 响应式 ===== */
+@media (max-width: 640px) {
+  .top_bar { padding: 0 12px; gap: 8px; }
+  .top_bar ul { gap: 14px; }
+  .top_bar a { font-size: 14px; }
+  .nav-label { display: none; }        /* 小屏只留 emoji */
+  .text { padding: 32px 16px; }
+  .text h1 { font-size: 26px; }
+  .gallery { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+}
+
+/* ===== 11. 尊重「减少动态效果」偏好 ===== */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
 }

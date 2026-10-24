@@ -3,75 +3,89 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="color-scheme" content="light dark" />
-  <meta name="theme-color" content="#ffffff" />
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="因硕贝贝（EnsureFish）的个人主页：摄影作品、自设展示与联系方式。">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="因硕贝贝的官网 | EnsureFish">
+  <meta property="og:description" content="至善 · 至美">
+  <meta property="og:url" content="https://ensurefish.pages.dev/">
+  <title>因硕贝贝的官网 | EnsureFish</title>
+
   <script>
     (function () {
       try {
         var saved = localStorage.getItem('theme');
         var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         var theme = (saved === 'light' || saved === 'dark')
-          ? saved
-          : (systemDark ? 'dark' : 'light');
-        document.documentElement.dataset.theme = theme;
-        document.documentElement.style.colorScheme = theme;
+          ? saved : (systemDark ? 'dark' : 'light');
+        var root = document.documentElement;
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.content = theme === 'dark' ? '#0f1115' : '#ffffff';
       } catch (e) {}
     })();
   </script>
-  <title>EnsureFish</title>
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <button class="theme-toggle" id="themeToggle" type="button"
-          aria-label="切换深色模式" title="切换深色模式">
-    <span id="themeIcon">🌙</span>
-  </button>
-  <!--置顶栏-->
-  <div class="top_bar">
-  <p>EF</p>
-  <ul>
-  <li><a href="#">🏠 首页</a></li>
-  <li><a href="#gallery">🌁 画廊</a></li>
-  <li><a href="#fursona">🪪 设子</a></li>
-  <li><a href="#contact">☎️ 联系</a></li>
-  </ul>
-  </div>
-  <!--大卡片，用于CSS-->
+  <a href="#main" class="skip-link">跳到主要内容</a>
+
+  <header class="top_bar">
+    <a class="logo" href="#">EF</a>
+    <nav aria-label="主导航">
+      <ul>
+        <li><a href="#">🏠 <span class="nav-label">首页</span></a></li>
+        <li><a href="#gallery">🌁 <span class="nav-label">画廊</span></a></li>
+        <li><a href="#fursona">🪪 <span class="nav-label">设子</span></a></li>
+        <li><a href="#contact">☎️ <span class="nav-label">联系</span></a></li>
+      </ul>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" type="button"
+            aria-label="切换深色模式" title="切换深色模式">
+      <span id="themeIcon">🌙</span>
+    </button>
+  </header>
+
   <div class="big_card">
-  <main>
-  <div class="text">
-    <!--主页内容-->
-    <h1>因硕贝贝 的官网！</h1>
-    <p>至善 · 至美</p>
-    <p>你好，我叫 因硕贝贝 (EnsureFish)！一个Furry呀！</p>
-    <p>我平时会在<a href="https://space.bilibili.com/3546975999887513">Bilibili</a>，抖音 上发布视频。</p>
-    <p>如果你也喜欢我制作的视频，也可以<a href="#contact">加入我们</a>呀！</p>
+    <main id="main">
+      <section class="text">
+        <h1>因硕贝贝 的官网！</h1>
+        <p>至善 · 至美</p>
+        <p>你好，我叫 因硕贝贝 (EnsureFish)！一个 Furry 呀！</p>
+        <p>我平时会在 <a href="https://space.bilibili.com/3546975999887513" target="_blank" rel="noopener">Bilibili</a>、抖音 上发布视频。</p>
+        <p>如果你也喜欢我制作的视频，欢迎 <a href="#contact">加入我们</a>！</p>
+      </section>
+
+      <section class="text" id="gallery">
+        <h2>🌁 画廊</h2>
+        <p>这是我拍摄的照片</p>
+        <div class="gallery" id="gallery_1"></div>
+      </section>
+
+      <section class="text" id="fursona">
+        <h2>🪪 设定展示</h2>
+        <p>这是我的自设！</p>
+        <div class="gallery" id="gallery_2"></div>
+      </section>
+
+      <section class="text" id="contact">
+        <h2>☎️ 联系我们</h2>
+        <p>如果你喜欢我们的作品或对我们的作品有意见或建议，欢迎联系我们！</p>
+        <ul class="contact-list">
+          <li>🐧 <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=fGtbNWB8%2BhKvTCtJYaZNSEK3AADbcnYSFBR2N4G%2BbuwLK4mECunrBGglQWTHFO%2BW&busi_data=eyJncm91cENvZGUiOiI5MDMzOTMwMTIiLCJ0b2tlbiI6IkhKUUROWmxlODdkU09Yc29kbXZsZU9yMGdjTFF4S201TFp3UFlXeFl3c1BWNy9Ha0dMMXNldVJnTjVpR1VmdEIiLCJ1aW4iOiIxNTkwMjE5Mjk5In0%3D&data=HEM42gnyhhyVTzVLpcSByTM01UmutHzFWJ4dZpioxN8xyL_9owW5aiCp0expp3ZQNybie4vvs7OkYfc91cnGsQ&svctype=4&tempid=h5_group_info" target="_blank" rel="noopener">QQ 交流群</a></li>
+          <li>🐱 <a href="https://github.com/SZQ2268/EnsureFish" target="_blank" rel="noopener">GitHub 仓库</a></li>
+        </ul>
+      </section>
+    </main>
+    <footer>
+      <p>2026 &copy; 保留所有权利</p>
+      <p>感谢 <a href="https://github.com/SZQ2268" target="_blank" rel="noopener">沈志清</a> 提供技术支持</p>
+    </footer>
   </div>
-  <div class="text" id="gallery">
-    <h2>🌁 画廊</h2>
-    <p>这是我拍摄的照片</p>
-    <div id="gallery_1"></div>
-  </div>
-  <div class="text" id="fursona">
-    <h2>🪪 设定展示</h2>
-    <p>这是我的自设！</p>
-    <div id="gallery_2"></div>
-  </div>
-  <div class="text" id="contact">
-    <h2>☎️ 联系我们</h2>
-    <p>如果你喜欢我们的作品或对我们的作品有意见或建议，欢迎联系我们！</p>
-    <ul>
-      <li><p>🐧 <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=fGtbNWB8%2BhKvTCtJYaZNSEK3AADbcnYSFBR2N4G%2BbuwLK4mECunrBGglQWTHFO%2BW&busi_data=eyJncm91cENvZGUiOiI5MDMzOTMwMTIiLCJ0b2tlbiI6IkhKUUROWmxlODdkU09Yc29kbXZsZU9yMGdjTFF4S201TFp3UFlXeFl3c1BWNy9Ha0dMMXNldVJnTjVpR1VmdEIiLCJ1aW4iOiIxNTkwMjE5Mjk5In0%3D&data=HEM42gnyhhyVTzVLpcSByTM01UmutHzFWJ4dZpioxN8xyL_9owW5aiCp0expp3ZQNybie4vvs7OkYfc91cnGsQ&svctype=4&tempid=h5_group_info">QQ交流群</a></p></li>
-      <li><p>🐱 <a href="https://github.com/SZQ2268/EnsureFish">GitHub仓库</a></p></li>
-    </ul>
-  </div>
-  </main>
-  <!--页脚-->
-  <footer>
-  <p>2026 &copy; 保留所有权利</p>
-  <p>感谢 <a href="https://github.com/SZQ2268">沈志清</a> 提供技术支持</p>
-  </footer>
-  </div>
-</body>
+
   <script src="script.js"></script>
+</body>
 </html>

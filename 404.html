@@ -3,20 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Error!</title>
-<link rel="stylesheet" href="style.css">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="robots" content="noindex">
+  <title>404 页面未找到 | EnsureFish</title>
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('theme');
+        var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = (saved === 'light' || saved === 'dark')
+          ? saved : (systemDark ? 'dark' : 'light');
+        var root = document.documentElement;
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.content = theme === 'dark' ? '#0f1115' : '#ffffff';
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <div class="big_card"><div class="text">
-  <h1>404</h1>
-  <p>Not Found!</p>
-  <a href="index.html">回到首页</a>
-  </div>
-  <footer>
-    <p>2026 &copy; 保留所有权利</p>
-    <p>感谢 <a href="https://github.com/SZQ2268">沈志清</a> 提供技术支持</p>
-  </footer>
-  </div>
+<body class="page-404">
+  <main class="big_card">
+    <div class="text">
+      <h1>404</h1>
+      <p>页面未找到 / Not Found!</p>
+      <p><a href="index.html">返回首页</a> · <a href="en.html">Back to Home</a></p>
+    </div>
+    <footer>
+      <p>2026 &copy; 保留所有权利</p>
+      <p>感谢 <a href="https://github.com/SZQ2268" target="_blank" rel="noopener">沈志清</a> 提供技术支持</p>
+    </footer>
+  </main>
 </body>
-  <script src="script.js"></script>
 </html>
