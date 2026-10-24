@@ -1,10 +1,8 @@
 {
   "gallery": [
-    { "src": "images/gallery/001.jpg", "alt": "摄影作品 1" },
-    { "src": "https://pub-3bb49bb0e4de4bcb941623bccda3b695.r2.dev/Gallery/001.webp", "alt": "摄影作品 2" }
+    { "src": "https://pub-3bb49bb0e4de4bcb941623bccda3b695.r2.dev/Gallery/001.webp", "alt": "摄影作品 1" }
   ],
   "fursona": [
-    { "src": "images/fursona/001.png", "alt": "自设形象 1" },
-    { "src": "https://pub-3bb49bb0e4de4bcb941623bccda3b695.r2.dev/Gallery/002.webp", "alt": "自设形象 2" }
+    { "src": "https://pub-3bb49bb0e4de4bcb941623bccda3b695.r2.dev/Gallery/002.webp", "alt": "自设形象 1" }
   ]
 }
