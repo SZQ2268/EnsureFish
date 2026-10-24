@@ -1,8 +1,8 @@
 {
   "gallery": [
-    { "src": "https://pub-3bb49bb0e4de4bcb941623bccda3b695.r2.dev/Gallery/001.webp", "alt": "摄影作品 1" }
+    "https://pub-3bb49bb0e4de4bcb941623bccda3b695.r2.dev/Gallery/001.webp"
   ],
   "fursona": [
-    { "src": "https://pub-3bb49bb0e4de4bcb941623bccda3b695.r2.dev/Gallery/002.webp", "alt": "自设形象 1" }
+    "https://pub-3bb49bb0e4de4bcb941623bccda3b695.r2.dev/Gallery/002.webp"
   ]
 }
