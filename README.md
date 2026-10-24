@@ -13,7 +13,9 @@
 
 ## 部署
 
-本站为纯静态站点，直接推送到 Cloudflare Pages / GitHub Pages 即可。
+本站为纯静态站点。
+
+[在Cloudflare上](https://ensurefish.pages.dev/)
 
 ## 本地预览
 
