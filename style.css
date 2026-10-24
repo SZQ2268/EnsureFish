@@ -86,10 +86,18 @@ body.page-404 { padding-top: 0; }
 }
 
 .top_bar .logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 18px;
   font-weight: 700;
   color: var(--text);
   text-decoration: none;
+}
+
+.logo-icon {
+  display: block;
+  border-radius: 6px;
 }
 
 .top_bar nav { margin-left: auto; }
