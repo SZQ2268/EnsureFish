@@ -143,3 +143,56 @@
       });
     });
 })();
+/* ========== 3. 鼠标光晕跟随 ========== */
+(function () {
+  'use strict';
+
+  // 只在支持精细指针（鼠标）的设备上运行
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+
+  // 动态创建光晕元素，不污染 HTML
+  var glow = document.createElement('div');
+  glow.id = 'cursor-glow';
+  document.body.appendChild(glow);
+
+  var targetX = window.innerWidth / 2;
+  var targetY = window.innerHeight / 2;
+  var currentX = targetX;
+  var currentY = targetY;
+  var hasMoved = false;
+
+  // 监听鼠标移动
+  window.addEventListener('mousemove', function (e) {
+    targetX = e.clientX;
+    targetY = e.clientY;
+    
+    // 首次移动时才显示光晕
+    if (!hasMoved) {
+      hasMoved = true;
+      glow.style.opacity = '1';
+    }
+  });
+
+  // 鼠标离开窗口时隐藏
+  document.addEventListener('mouseleave', function () {
+    glow.style.opacity = '0';
+  });
+  
+  document.addEventListener('mouseenter', function () {
+    if (hasMoved) glow.style.opacity = '1';
+  });
+
+  // 平滑动画循环
+  function animate() {
+    // 0.15 是缓动系数，值越小拖拽感越强，值越大越跟手（建议 0.1 ~ 0.2）
+    currentX += (targetX - currentX) * 0.15;
+    currentY += (targetY - currentY) * 0.15;
+
+    // 使用 translate3d 触发 GPU 加速
+    glow.style.transform = 'translate3d(' + currentX + 'px, ' + currentY + 'px, 0)';
+    
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+})();
