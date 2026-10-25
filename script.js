@@ -100,8 +100,12 @@
     img.alt = info.alt;
     img.loading = 'lazy';
     img.decoding = 'async';
+    img.fetchPriority = 'low'; // 降低画廊图片的网络优先级
+    img.width = 400;  // 加上占位宽高，辅助浏览器计算布局
+    img.height = 300;
+    
     img.addEventListener('error', function () {
-      img.classList.add('is-error');   // 降透明度 + 灰度，保留布局
+      img.classList.add('is-error');
       img.alt += '（加载失败）';
     });
     return img;
