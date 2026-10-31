@@ -118,7 +118,7 @@ a:hover { color: var(--accent-hover); }
   color: var(--text-muted);
   font-size: 15px;
   font-weight: 500;
-  transition: all 0.2s ease;
+  transition: color 0.2s ease, background-color 0.2s ease;
 }
 .top_bar a:hover {
   color: var(--text);
@@ -137,7 +137,7 @@ a:hover { color: var(--accent-hover); }
   color: var(--text);
   cursor: pointer;
   font-size: 18px;
-  transition: all 0.2s ease;
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
 }
 .theme-toggle:hover {
   border-color: var(--accent);
@@ -207,7 +207,7 @@ a:hover { color: var(--accent-hover); }
   border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
   opacity: 0.15;
   filter: blur(10px);
-  transition: all 0.5s ease;
+  transition: transform 0.5s ease, opacity 0.5s ease;
   z-index: -1;
 }
 
@@ -236,6 +236,8 @@ a:hover { color: var(--accent-hover); }
   padding: 40px 0;
   border-top: 1px solid var(--border);
 }
+/* 页面第一个内容区块（英文站首屏）不显示顶线 */
+main > .section:first-child { border-top: 0; }
 .section h2 {
   font-size: 26px;
   font-weight: 700;
@@ -374,7 +376,7 @@ html[data-theme='dark'] .gallery img:hover {
   z-index: 9999;        /* 保证在最高层 */
   opacity: 0;
   transition: opacity 0.3s ease;
-  will-change: transform; /* 开启硬件加速 */
+  /* will-change 由 script.js 在动画运行时动态开关，空闲时释放合成层 */
   
   /* 亮色模式：柔和的蓝色光晕，使用 multiply 混合模式让它在白底上显色 */
   background: radial-gradient(circle closest-side, rgba(59, 130, 246, 0.15), transparent 80%);
@@ -390,4 +392,25 @@ html[data-theme='dark'] #cursor-glow {
 /* 触摸屏设备直接隐藏 */
 @media (pointer: coarse) {
   #cursor-glow { display: none; }
+}
+
+/* ===== 15. 404 页面 ===== */
+.page-404 {
+  min-height: calc(100vh - var(--topbar-h));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.page-404 h1 {
+  font-size: 72px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+.page-404 p { margin-bottom: 8px; }
+.page-404 footer {
+  margin-top: 32px;
+  padding: 16px 0 8px;
+  border-top: 0;
 }

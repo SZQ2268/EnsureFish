@@ -10,28 +10,28 @@
   <meta property="og:title" content="EnsureFish's Personal Site">
   <meta property="og:description" content="The Good, the Beautiful">
   <meta property="og:url" content="https://ensurefish.pages.dev/en.html">
+  <meta property="og:image" content="https://pub-3bb49bb0e4de4bcb941623bccda3b695.r2.dev/Gallery/002.webp">
+  <meta property="og:image:alt" content="EnsureFish's fursona">
+  <link rel="canonical" href="https://ensurefish.pages.dev/en.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://ensurefish.pages.dev/">
+  <link rel="alternate" hreflang="en" href="https://ensurefish.pages.dev/en.html">
+  <link rel="alternate" hreflang="x-default" href="https://ensurefish.pages.dev/">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <title>EnsureFish's Personal Site</title>
 
-  <script>
-    (function () {
-      try {
-        var saved = localStorage.getItem('theme');
-        var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        var theme = (saved === 'light' || saved === 'dark')
-          ? saved : (systemDark ? 'dark' : 'light');
-        var root = document.documentElement;
-        root.dataset.theme = theme;
-        root.style.colorScheme = theme;
-        var meta = document.querySelector('meta[name="theme-color"]');
-        if (meta) meta.content = theme === 'dark' ? '#0f1115' : '#ffffff';
-      } catch (e) {}
-    })();
-  </script>
+  <!-- 预连接图片域名，画廊图片共用 -->
+  <link rel="preconnect" href="https://pub-3bb49bb0e4de4bcb941623bccda3b695.r2.dev" crossorigin>
+  <!-- 预加载画廊 JSON 数据（需与 script.js 的 fetch 完全匹配，勿加 crossorigin） -->
+  <link rel="preload" href="./images.json" as="fetch">
 
+  <!-- 主题引导脚本：同步加载，先于首帧渲染应用主题，避免闪烁 -->
+  <script src="theme.js"></script>
+
+  <!-- 字体：先 preconnect，样式表改为异步加载，不阻塞首屏渲染 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet"></noscript>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -57,7 +57,7 @@
 
   <div class="big_card">
     <main id="main">
-      <section class="text">
+      <section class="section">
         <h1>EnsureFish's Personal Site!</h1>
         <p>The Good, the Beautiful</p>
         <p>Hello! I am EnsureFish, a furry!</p>
@@ -65,19 +65,19 @@
         <p>If you like my videos, feel free to <a href="#contact">get in touch!</a></p>
       </section>
 
-      <section class="text" id="gallery">
+      <section class="section" id="gallery">
         <h2>🌁 Gallery</h2>
         <p>These are the photos I took:</p>
         <div class="gallery" id="gallery_1"></div>
       </section>
 
-      <section class="text" id="fursona">
+      <section class="section" id="fursona">
         <h2>🪪 Fursona</h2>
         <p>This is my fursona!</p>
         <div class="gallery" id="gallery_2"></div>
       </section>
 
-      <section class="text" id="contact">
+      <section class="section" id="contact">
         <h2>☎️ Contact</h2>
         <p>If you like our work or have any feedback, please feel free to contact us!</p>
         <ul class="contact-list">

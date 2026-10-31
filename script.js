@@ -1,73 +1,11 @@
 /* =========================================================
    EnsureFish 官网脚本
-   1) 主题切换（亮/暗 + 跟随系统）
-   2) 画廊图片渲染
+   1) 画廊图片渲染
+   2) 鼠标光晕跟随
+   （主题切换逻辑已独立到 theme.js，在 <head> 中同步加载）
    ========================================================= */
 
-/* ========== 1. 主题切换 ========== */
-(function () {
-  'use strict';
-
-  var STORAGE_KEY = 'theme';
-  var THEME_COLORS = { light: '#ffffff', dark: '#0f1115' };
-  var root = document.documentElement;
-  var mql = window.matchMedia('(prefers-color-scheme: dark)');
-  var meta = document.querySelector('meta[name="theme-color"]');
-  var btn = document.getElementById('themeToggle');
-  var icon = document.getElementById('themeIcon');
-
-  /* 缓存手动选择，避免每次读写 localStorage */
-  var saved = null;
-  try {
-    var v = localStorage.getItem(STORAGE_KEY);
-    saved = (v === 'light' || v === 'dark') ? v : null;
-  } catch (e) {}
-
-  function resolveTheme() {
-    return saved || (mql.matches ? 'dark' : 'light');
-  }
-
-  function persist(value) {
-    saved = value;
-    try {
-      if (value) localStorage.setItem(STORAGE_KEY, value);
-      else localStorage.removeItem(STORAGE_KEY);
-    } catch (e) { /* 隐私模式忽略 */ }
-  }
-
-  function apply(theme) {
-    root.dataset.theme = theme;
-    root.style.colorScheme = theme;
-    if (meta) meta.content = THEME_COLORS[theme];
-    if (icon) icon.textContent = theme === 'dark' ? '☀️' : '🌙';
-    if (btn) {
-      var label = theme === 'dark' ? '切换到浅色模式' : '切换到深色模式';
-      btn.setAttribute('aria-label', label);
-      btn.title = label;
-    }
-  }
-
-  if (btn) {
-    btn.addEventListener('click', function () {
-      var next = resolveTheme() === 'dark' ? 'light' : 'dark';
-      persist(next);
-      apply(next);
-    });
-  }
-
-  function onSystemChange() {
-    if (!saved) apply(mql.matches ? 'dark' : 'light');
-  }
-  if (typeof mql.addEventListener === 'function') {
-    mql.addEventListener('change', onSystemChange);
-  } else if (typeof mql.addListener === 'function') { // 旧版 Safari
-    mql.addListener(onSystemChange);
-  }
-
-  apply(resolveTheme());
-})();
-
-/* ========== 2. 画廊渲染 ========== */
+/* ========== 1. 画廊渲染 ========== */
 (function () {
   'use strict';
 
@@ -82,32 +20,48 @@
   });
   if (!hasGallery) return;
 
+  /* 按 <html lang> 选择文案，避免英文页出现中文提示 */
+  var isEn = (document.documentElement.lang || 'zh-CN')
+    .toLowerCase().indexOf('en') === 0;
+  var MESSAGES = isEn
+    ? { empty: 'No images yet.', error: 'Failed to load images, please try again later.' }
+    : { empty: '暂时没有图片', error: '图片加载失败，请稍后重试' };
+  var IMG_PREFIX = isEn ? 'Image ' : '图片 ';
+  var ALT_SUFFIX = isEn ? ' (failed to load)' : '（加载失败）';
+
   /* 兼容「字符串」与「{ src, alt }」两种 JSON 写法 */
   function normalize(item, index) {
     if (typeof item === 'string') {
       var s = item.trim();
-      return s ? { src: s, alt: '图片 ' + (index + 1) } : null;
+      return s ? { src: s, alt: IMG_PREFIX + (index + 1) } : null;
     }
     if (item && typeof item === 'object' && typeof item.src === 'string' && item.src.trim()) {
-      return { src: item.src.trim(), alt: item.alt || ('图片 ' + (index + 1)) };
+      return {
+        src: item.src.trim(),
+        alt: item.alt || (IMG_PREFIX + (index + 1))
+      };
     }
     return null;
   }
 
   function createImage(info) {
     var img = document.createElement('img');
+
+    // 先挂监听再设 src，避免缓存命中时错过 error 事件
+    img.addEventListener('error', function () {
+      if (!img.classList.contains('is-error')) { // 防止重复触发叠加后缀
+        img.classList.add('is-error');
+        img.alt += ALT_SUFFIX;
+      }
+    });
+
     img.src = info.src;
     img.alt = info.alt;
     img.loading = 'lazy';
     img.decoding = 'async';
     img.fetchPriority = 'low'; // 降低画廊图片的网络优先级
-    img.width = 400;  // 加上占位宽高，辅助浏览器计算布局
+    img.width = 400;  // 占位宽高，辅助浏览器预留布局、避免 CLS
     img.height = 300;
-    
-    img.addEventListener('error', function () {
-      img.classList.add('is-error');
-      img.alt += '（加载失败）';
-    });
     return img;
   }
 
@@ -117,7 +71,7 @@
 
     var items = Array.isArray(list) ? list.map(normalize).filter(Boolean) : [];
     if (items.length === 0) {
-      box.textContent = '暂时没有图片';
+      box.textContent = MESSAGES.empty;
       return;
     }
 
@@ -128,7 +82,10 @@
     box.appendChild(frag);
   }
 
-  fetch('./images.json', { cache: 'no-cache' })
+  /* 默认缓存策略：与 <head> 中的 <link rel="preload" as="fetch">
+     相匹配，让预加载真正生效（CDN 会按 ETag 做 304 校验）。
+     不要使用 cache: 'no-cache'——那会导致预加载缓存无法命中、产生二次请求。 */
+  fetch('./images.json')
     .then(function (res) {
       if (!res.ok) throw new Error('HTTP ' + res.status);
       return res.json();
@@ -143,18 +100,21 @@
       console.error('画廊加载失败：', err);
       TARGETS.forEach(function (t) {
         var box = document.getElementById(t.id);
-        if (box) box.textContent = '图片加载失败，请稍后重试';
+        if (box) box.textContent = MESSAGES.error;
       });
     });
 })();
-/* ========== 3. 鼠标光晕跟随 ========== */
+
+/* ========== 2. 鼠标光晕跟随 ========== */
 (function () {
   'use strict';
 
-  // 只在支持精细指针（鼠标）的设备上运行
+  /* 只在支持精细指针（鼠标）的设备上运行 */
   if (!window.matchMedia('(pointer: fine)').matches) return;
 
-  // 动态创建光晕元素，不污染 HTML
+  /* 尊重系统「减少动态效果」偏好：完全禁用光晕 */
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
   var glow = document.createElement('div');
   glow.id = 'cursor-glow';
   document.body.appendChild(glow);
@@ -164,39 +124,60 @@
   var currentX = targetX;
   var currentY = targetY;
   var hasMoved = false;
+  var running = false;
 
-  // 监听鼠标移动
+  /* 缓动系数：值越小拖拽感越强，值越大越跟手（建议 0.1 ~ 0.2） */
+  var EASE = 0.15;
+
+  /* 只在确有动画需求时运行 rAF 循环；
+     收敛后立即停止，避免鼠标不动时 60fps 空转耗电。 */
+  function step() {
+    currentX += (targetX - currentX) * EASE;
+    currentY += (targetY - currentY) * EASE;
+
+    // 使用 translate3d 触发 GPU 加速
+    glow.style.transform = 'translate3d(' + currentX + 'px, ' + currentY + 'px, 0)';
+
+    var settled = Math.abs(targetX - currentX) < 0.5 &&
+                  Math.abs(targetY - currentY) < 0.5;
+    if (settled) {
+      running = false;
+      glow.style.willChange = 'auto'; // 释放合成层，降低内存占用
+      return;
+    }
+    requestAnimationFrame(step);
+  }
+
+  function ensureRunning() {
+    if (running) return;
+    running = true;
+    glow.style.willChange = 'transform';
+    requestAnimationFrame(step);
+  }
+
   window.addEventListener('mousemove', function (e) {
     targetX = e.clientX;
     targetY = e.clientY;
-    
+
     // 首次移动时才显示光晕
     if (!hasMoved) {
       hasMoved = true;
       glow.style.opacity = '1';
     }
+    ensureRunning();
   });
 
-  // 鼠标离开窗口时隐藏
+  // 鼠标离开窗口时淡出；移入时若曾移动过则重新显示
   document.addEventListener('mouseleave', function () {
     glow.style.opacity = '0';
   });
-  
-  document.addEventListener('mouseenter', function () {
-    if (hasMoved) glow.style.opacity = '1';
+
+  document.addEventListener('mouseenter', function (e) {
+    targetX = e.clientX;
+    targetY = e.clientY;
+    if (hasMoved) {
+      glow.style.opacity = '1';
+      ensureRunning();
+    }
   });
-
-  // 平滑动画循环
-  function animate() {
-    // 0.15 是缓动系数，值越小拖拽感越强，值越大越跟手（建议 0.1 ~ 0.2）
-    currentX += (targetX - currentX) * 0.15;
-    currentY += (targetY - currentY) * 0.15;
-
-    // 使用 translate3d 触发 GPU 加速
-    glow.style.transform = 'translate3d(' + currentX + 'px, ' + currentY + 'px, 0)';
-    
-    requestAnimationFrame(animate);
-  }
-
-  animate();
 })();

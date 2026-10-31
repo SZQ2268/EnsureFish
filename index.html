@@ -10,30 +10,23 @@
   <meta property="og:title" content="因硕贝贝的官网 | EnsureFish">
   <meta property="og:description" content="至善 · 至美">
   <meta property="og:url" content="https://ensurefish.pages.dev/">
+  <meta property="og:image" content="https://pub-3bb49bb0e4de4bcb941623bccda3b695.r2.dev/Gallery/002.webp">
+  <meta property="og:image:alt" content="因硕贝贝的自设形象">
+  <link rel="canonical" href="https://ensurefish.pages.dev/">
+  <link rel="alternate" hreflang="en" href="https://ensurefish.pages.dev/en.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://ensurefish.pages.dev/">
+  <link rel="alternate" hreflang="x-default" href="https://ensurefish.pages.dev/">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <!-- 预连接图片域名 -->
   <link rel="preconnect" href="https://pub-3bb49bb0e4de4bcb941623bccda3b695.r2.dev" crossorigin>
   <!-- 预加载首屏 LCP 图片，提升渲染速度 -->
   <link rel="preload" as="image" href="https://pub-3bb49bb0e4de4bcb941623bccda3b695.r2.dev/Gallery/002.webp" fetchpriority="high">
-  <!-- 预加载画廊 JSON 数据，缩短请求链 -->
-  <link rel="preload" href="./images.json" as="fetch" crossorigin>
+  <!-- 预加载画廊 JSON 数据，缩短请求链（需与 script.js 的 fetch 完全匹配，勿加 crossorigin） -->
+  <link rel="preload" href="./images.json" as="fetch">
   <title>因硕贝贝的官网 | EnsureFish</title>
 
-  <script>
-    (function () {
-      try {
-        var saved = localStorage.getItem('theme');
-        var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        var theme = (saved === 'light' || saved === 'dark')
-          ? saved : (systemDark ? 'dark' : 'light');
-        var root = document.documentElement;
-        root.dataset.theme = theme;
-        root.style.colorScheme = theme;
-        var meta = document.querySelector('meta[name="theme-color"]');
-        if (meta) meta.content = theme === 'dark' ? '#0f1115' : '#ffffff';
-      } catch (e) {}
-    })();
-  </script>
+  <!-- 主题引导脚本：同步加载，先于首帧渲染应用主题，避免闪烁 -->
+  <script src="theme.js"></script>
 
   <link rel="stylesheet" href="style.css">
 </head>
