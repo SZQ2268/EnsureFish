@@ -41,17 +41,21 @@
     <a class="logo" href="#" aria-label="EnsureFish home">
       <img class="logo-icon" src="favicon.svg" alt="" width="28" height="28">
     </a>
-    <nav aria-label="Main navigation">
+    <nav id="siteNav" aria-label="Main navigation">
       <ul>
-        <li><a href="#">🏠 <span class="nav-label">Home</span></a></li>
-        <li><a href="#gallery">🌁 <span class="nav-label">Gallery</span></a></li>
-        <li><a href="#fursona">🪪 <span class="nav-label">Fursona</span></a></li>
-        <li><a href="#contact">☎️ <span class="nav-label">Contact</span></a></li>
+        <li><a href="#"><span class="nav-icon icon-home" aria-hidden="true"></span><span class="nav-label">Home</span></a></li>
+        <li><a href="#gallery"><span class="nav-icon icon-copy" aria-hidden="true"></span><span class="nav-label">Gallery</span></a></li>
+        <li><a href="#fursona"><span class="nav-icon icon-draw" aria-hidden="true"></span><span class="nav-label">Fursona</span></a></li>
+        <li><a href="#contact"><span class="nav-icon icon-phone" aria-hidden="true"></span><span class="nav-label">Contact</span></a></li>
       </ul>
     </nav>
     <button class="theme-toggle" id="themeToggle" type="button"
             aria-label="Switch theme" title="Switch theme">
       <span id="themeIcon">🌙</span>
+    </button>
+    <button class="menu-toggle" id="menuToggle" type="button"
+            aria-label="Open menu" aria-expanded="false" aria-controls="siteNav">
+      <span class="nav-icon icon-menu" aria-hidden="true"></span>
     </button>
   </header>
 
@@ -66,23 +70,23 @@
       </section>
 
       <section class="section" id="gallery">
-        <h2>🌁 Gallery</h2>
+        <h2><span class="section-icon icon-copy" aria-hidden="true"></span>Gallery</h2>
         <p>These are the photos I took:</p>
         <div class="gallery" id="gallery_1"></div>
       </section>
 
       <section class="section" id="fursona">
-        <h2>🪪 Fursona</h2>
+        <h2><span class="section-icon icon-draw" aria-hidden="true"></span>Fursona</h2>
         <p>This is my fursona!</p>
         <div class="gallery" id="gallery_2"></div>
       </section>
 
       <section class="section" id="contact">
-        <h2>☎️ Contact</h2>
+        <h2><span class="section-icon icon-phone" aria-hidden="true"></span>Contact</h2>
         <p>If you like our work or have any feedback, please feel free to contact us!</p>
         <ul class="contact-list">
-          <li>🐧 <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=fGtbNWB8%2BhKvTCtJYaZNSEK3AADbcnYSFBR2N4G%2BbuwLK4mECunrBGglQWTHFO%2BW&busi_data=eyJncm91cENvZGUiOiI5MDMzOTMwMTIiLCJ0b2tlbiI6IkhKUUROWmxlODdkU09Yc29kbXZsZU9yMGdjTFF4S201TFp3UFlXeFl3c1BWNy9Ha0dMMXNldVJnTjVpR1VmdEIiLCJ1aW4iOiIxNTkwMjE5Mjk5In0%3D&data=HEM42gnyhhyVTzVLpcSByTM01UmutHzFWJ4dZpioxN8xyL_9owW5aiCp0expp3ZQNybie4vvs7OkYfc91cnGsQ&svctype=4&tempid=h5_group_info" target="_blank" rel="noopener">QQ</a></li>
-          <li>🐱 <a href="https://github.com/SZQ2268/EnsureFish" target="_blank" rel="noopener">GitHub</a></li>
+          <li><span class="section-icon icon-link" aria-hidden="true"></span><a href="https://qun.qq.com/universal-share/share?ac=1&authKey=fGtbNWB8%2BhKvTCtJYaZNSEK3AADbcnYSFBR2N4G%2BbuwLK4mECunrBGglQWTHFO%2BW&busi_data=eyJncm91cENvZGUiOiI5MDMzOTMwMTIiLCJ0b2tlbiI6IkhKUUROWmxlODdkU09Yc29kbXZsZU9yMGdjTFF4S201TFp3UFlXeFl3c1BWNy9Ha0dMMXNldVJnTjVpR1VmdEIiLCJ1aW4iOiIxNTkwMjE5Mjk5In0%3D&data=HEM42gnyhhyVTzVLpcSByTM01UmutHzFWJ4dZpioxN8xyL_9owW5aiCp0expp3ZQNybie4vvs7OkYfc91cnGsQ&svctype=4&tempid=h5_group_info" target="_blank" rel="noopener">QQ</a></li>
+          <li><span class="section-icon icon-link" aria-hidden="true"></span><a href="https://github.com/SZQ2268/EnsureFish" target="_blank" rel="noopener">GitHub</a></li>
         </ul>
       </section>
     </main>

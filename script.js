@@ -2,6 +2,7 @@
    EnsureFish 官网脚本
    1) 画廊图片渲染
    2) 鼠标光晕跟随
+   3) 移动端汉堡菜单
    （主题切换逻辑已独立到 theme.js，在 <head> 中同步加载）
    ========================================================= */
 
@@ -207,5 +208,58 @@
       glow.style.opacity = '1';
       ensureRunning();
     }
+  });
+})();
+
+/* ========== 3. 移动端汉堡菜单 ========== */
+(function () {
+  'use strict';
+
+  var btn = document.getElementById('menuToggle');
+  var bar = document.querySelector('.top_bar');
+  if (!btn || !bar) return; // 404 等无导航的页面不存在该按钮
+
+  /* 按 <html lang> 选择无障碍文案 */
+  var isEn = (document.documentElement.lang || 'zh-CN')
+    .toLowerCase().indexOf('en') === 0;
+  var LABELS = {
+    open: isEn ? 'Open menu' : '打开菜单',
+    close: isEn ? 'Close menu' : '关闭菜单'
+  };
+
+  /* 展开状态通过 .nav-open 类交给 CSS 控制（见 style.css 小屏媒体查询） */
+  function setOpen(open) {
+    bar.classList.toggle('nav-open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-label', open ? LABELS.close : LABELS.open);
+  }
+
+  /* 按钮切换展开 / 收起 */
+  btn.addEventListener('click', function () {
+    setOpen(!bar.classList.contains('nav-open'));
+  });
+
+  /* 点击菜单中的链接后自动收起，避免下拉面板遮挡目标区块 */
+  var nav = bar.querySelector('nav');
+  if (nav) {
+    nav.addEventListener('click', function (e) {
+      var target = e.target;
+      if (target && target.closest && target.closest('a')) setOpen(false);
+    });
+  }
+
+  /* Esc 关闭，并把焦点还给按钮 */
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && bar.classList.contains('nav-open')) {
+      setOpen(false);
+      btn.focus();
+    }
+  });
+
+  /* 点击顶栏以外区域关闭。
+     按钮自身的点击由上面的处理器处理，这里不会误关。 */
+  document.addEventListener('click', function (e) {
+    if (!bar.classList.contains('nav-open')) return;
+    if (!bar.contains(e.target)) setOpen(false);
   });
 })();

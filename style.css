@@ -125,8 +125,35 @@ a:hover { color: var(--accent-hover); }
   background: var(--border);
 }
 
-/* ===== 5. 主题切换按钮 ===== */
-.theme-toggle {
+/* ===== 导航 / 标题图标（SVG mask 引用 images/*.svg） ===== */
+/* 图标以 currentColor 着色，颜色自动跟随文字与明暗主题，
+   无需为暗色模式另备一套图片；文件是唯一数据源，改图即可全站生效。 */
+.nav-icon,
+.section-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-color: currentColor;
+  -webkit-mask-image: var(--icon);
+  mask-image: var(--icon);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  vertical-align: -0.15em; /* 非 flex 场景下与文本基线对齐 */
+}
+.icon-home  { --icon: url('images/home.svg'); }
+.icon-draw  { --icon: url('images/draw.svg'); }
+.icon-phone { --icon: url('images/phone.svg'); }
+.icon-copy  { --icon: url('images/copy.svg'); }
+.icon-link  { --icon: url('images/link.svg'); }
+.icon-menu  { --icon: url('images/menu.svg'); }
+
+/* ===== 5. 顶栏按钮（主题切换 / 汉堡菜单，样式共用） ===== */
+.theme-toggle,
+.menu-toggle {
   width: 40px;
   height: 40px;
   display: grid;
@@ -139,10 +166,14 @@ a:hover { color: var(--accent-hover); }
   font-size: 18px;
   transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
 }
-.theme-toggle:hover {
+.theme-toggle:hover,
+.menu-toggle:hover {
   border-color: var(--accent);
   background: var(--bg);
 }
+
+/* 汉堡按钮默认隐藏，仅小屏显示（见响应式区块） */
+.menu-toggle { display: none; }
 
 /* ===== 6. 主体布局 ===== */
 .big_card {
@@ -341,17 +372,35 @@ html[data-theme='dark'] .gallery img:hover {
   }
 }
 
-/* 小屏手机：导航栏与整体间距调整 */
+/* 小屏手机：导航收进汉堡菜单，以下拉面板展示 */
 @media (max-width: 640px) {
-  .top_bar { padding: 0 16px; }
-  .top_bar ul { gap: 4px; }
-  .top_bar a { padding: 8px; font-size: 14px; }
-  .nav-label { display: none; } /* 小屏仅留 Emoji */
-  
+  .top_bar { padding: 0 16px; gap: 12px; }
+
+  /* 汉堡按钮：仅小屏显示，并把主题按钮一起推到右侧 */
+  .menu-toggle { display: grid; margin-left: auto; }
+
+  /* 导航改为顶栏下方的下拉面板，默认收起 */
+  .top_bar nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    padding: 8px 16px 16px;
+    background: var(--bg-glass);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    display: none;
+  }
+  .top_bar.nav-open nav { display: block; }
+  .top_bar nav ul { flex-direction: column; gap: 4px; }
+  .top_bar nav a { padding: 12px 16px; font-size: 16px; }
+
   .hero { padding: 30px 0 40px; } /* 微调首屏间距 */
   .hero h1 { font-size: 32px; }
   .hero .subtitle { font-size: 18px; }
-  
+
   .section { padding: 32px 0; }
   .gallery { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
 }

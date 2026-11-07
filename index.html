@@ -37,17 +37,21 @@
     <a class="logo" href="#" aria-label="EnsureFish 首页">
       <img class="logo-icon" src="favicon.svg" alt="" width="28" height="28">
     </a>
-    <nav aria-label="主导航">
+    <nav id="siteNav" aria-label="主导航">
       <ul>
-        <li><a href="#">🏠 <span class="nav-label">首页</span></a></li>
-        <li><a href="#gallery">🌁 <span class="nav-label">画廊</span></a></li>
-        <li><a href="#fursona">🪪 <span class="nav-label">设子</span></a></li>
-        <li><a href="#contact">☎️ <span class="nav-label">联系</span></a></li>
+        <li><a href="#"><span class="nav-icon icon-home" aria-hidden="true"></span><span class="nav-label">首页</span></a></li>
+        <li><a href="#gallery"><span class="nav-icon icon-copy" aria-hidden="true"></span><span class="nav-label">画廊</span></a></li>
+        <li><a href="#fursona"><span class="nav-icon icon-draw" aria-hidden="true"></span><span class="nav-label">设子</span></a></li>
+        <li><a href="#contact"><span class="nav-icon icon-phone" aria-hidden="true"></span><span class="nav-label">联系</span></a></li>
       </ul>
     </nav>
     <button class="theme-toggle" id="themeToggle" type="button"
             aria-label="切换深色模式" title="切换深色模式">
       <span id="themeIcon">🌙</span>
+    </button>
+    <button class="menu-toggle" id="menuToggle" type="button"
+            aria-label="打开菜单" aria-expanded="false" aria-controls="siteNav">
+      <span class="nav-icon icon-menu" aria-hidden="true"></span>
     </button>
   </header>
 
@@ -74,25 +78,25 @@
 
       <!-- 画廊 -->
       <section class="section" id="gallery">
-        <h2>🌁 画廊</h2>
+        <h2><span class="section-icon icon-copy" aria-hidden="true"></span>画廊</h2>
         <p>这是我拍摄的照片</p>
         <div class="gallery" id="gallery_1"></div>
       </section>
 
       <!-- 设子 -->
       <section class="section" id="fursona">
-        <h2>🪪 设定展示</h2>
+        <h2><span class="section-icon icon-draw" aria-hidden="true"></span>设定展示</h2>
         <p>这是我的自设！</p>
         <div class="gallery" id="gallery_2"></div>
       </section>
 
       <!-- 联系 -->
       <section class="section" id="contact">
-        <h2>☎️ 联系我们</h2>
+        <h2><span class="section-icon icon-phone" aria-hidden="true"></span>联系我们</h2>
         <p>如果你喜欢我们的作品或对我们的作品有意见或建议，欢迎联系我们！</p>
         <ul class="contact-list">
-          <li>🐧 <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=fGtbNWB8%2BhKvTCtJYaZNSEK3AADbcnYSFBR2N4G%2BbuwLK4mECunrBGglQWTHFO%2BW&busi_data=eyJncm91cENvZGUiOiI5MDMzOTMwMTIiLCJ0b2tlbiI6IkhKUUROWmxlODdkU09Yc29kbXZsZU9yMGdjTFF4S201TFp3UFlXeFl3c1BWNy9Ha0dMMXNldVJnTjVpR1VmdEIiLCJ1aW4iOiIxNTkwMjE5Mjk5In0%3D&data=HEM42gnyhhyVTzVLpcSByTM01UmutHzFWJ4dZpioxN8xyL_9owW5aiCp0expp3ZQNybie4vvs7OkYfc91cnGsQ&svctype=4&tempid=h5_group_info" target="_blank" rel="noopener">QQ 交流群</a></li>
-          <li>🐱 <a href="https://github.com/SZQ2268/EnsureFish">GitHub 仓库</a></li>
+          <li><span class="section-icon icon-link" aria-hidden="true"></span><a href="https://qun.qq.com/universal-share/share?ac=1&authKey=fGtbNWB8%2BhKvTCtJYaZNSEK3AADbcnYSFBR2N4G%2BbuwLK4mECunrBGglQWTHFO%2BW&busi_data=eyJncm91cENvZGUiOiI5MDMzOTMwMTIiLCJ0b2tlbiI6IkhKUUROWmxlODdkU09Yc29kbXZsZU9yMGdjTFF4S201TFp3UFlXeFl3c1BWNy9Ha0dMMXNldVJnTjVpR1VmdEIiLCJ1aW4iOiIxNTkwMjE5Mjk5In0%3D&data=HEM42gnyhhyVTzVLpcSByTM01UmutHzFWJ4dZpioxN8xyL_9owW5aiCp0expp3ZQNybie4vvs7OkYfc91cnGsQ&svctype=4&tempid=h5_group_info" target="_blank" rel="noopener">QQ 交流群</a></li>
+          <li><span class="section-icon icon-link" aria-hidden="true"></span><a href="https://github.com/SZQ2268/EnsureFish">GitHub 仓库</a></li>
         </ul>
       </section>
     </main>
