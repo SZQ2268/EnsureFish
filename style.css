@@ -171,7 +171,8 @@ a:hover { color: var(--accent-hover); }
   letter-spacing: -0.02em;
   margin-bottom: 8px;
   background: linear-gradient(135deg, var(--text) 0%, var(--text-muted) 100%);
-  -webkit-background-clip: text;
+  background-clip: text;         /* 标准属性，Firefox 等现代浏览器直接生效 */
+  -webkit-background-clip: text; /* Chromium / Safari 兼容 */
   -webkit-text-fill-color: transparent;
 }
 
@@ -301,7 +302,7 @@ footer p + p { margin-top: 8px; }
   background: var(--border);
   box-shadow: var(--shadow);
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
-  cursor: pointer;
+  /* 画廊图片暂未挂点击行为，不用 pointer 光标以免误导可点击 */
 }
 
 .gallery img:hover {
@@ -369,7 +370,7 @@ html[data-theme='dark'] .gallery img:hover {
   top: 0; left: 0;
   width: 600px;
   height: 600px;
-  margin-left: -300px;
+  margin-left: -300px;  /* 与 script.js 的 translate3d 配合，把圆心对准光标 */
   margin-top: -300px;
   border-radius: 50%;
   pointer-events: none; /* 关键：绝不能阻挡鼠标点击 */
