@@ -1,5 +1,7 @@
 # EnsureFish
 
+**中文** | [English](README.en.md) | [日本語](README.ja.md)
+
 因硕贝贝（EnsureFish）的个人主页源码。
 
 ## 技术栈
