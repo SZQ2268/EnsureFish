@@ -5,25 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#ffffff">
-  <meta name="description" content="因硕贝贝（EnsureFish）的个人主页：摄影作品、自设展示与联系方式。">
+  <meta name="description" content="因硕贝贝（EnsureFish），一只爱拍视频和照片的 Furry。这里是我的摄影作品、设子展示与联系方式。">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="因硕贝贝的官网 | EnsureFish">
-  <meta property="og:description" content="至善 · 至美">
+  <meta property="og:title" content="因硕贝贝（EnsureFish）的个人主页">
+  <meta property="og:description" content="因硕贝贝（EnsureFish），一只爱拍视频和照片的 Furry。这里是我的摄影作品、设子展示与联系方式。">
   <meta property="og:url" content="https://ensurefish.pages.dev/">
   <meta property="og:image" content="https://pub-3bb49bb0e4de4bcb941623bccda3b695.r2.dev/Gallery/002.webp">
-  <meta property="og:image:alt" content="因硕贝贝的自设形象">
+  <meta property="og:image:alt" content="因硕贝贝的设子形象">
   <link rel="canonical" href="https://ensurefish.pages.dev/">
-  <link rel="alternate" hreflang="en" href="https://ensurefish.pages.dev/en.html">
   <link rel="alternate" hreflang="zh-CN" href="https://ensurefish.pages.dev/">
+  <link rel="alternate" hreflang="en" href="https://ensurefish.pages.dev/en.html">
+  <link rel="alternate" hreflang="ja" href="https://ensurefish.pages.dev/ja.html">
   <link rel="alternate" hreflang="x-default" href="https://ensurefish.pages.dev/">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <!-- 预连接图片域名 -->
   <link rel="preconnect" href="https://pub-3bb49bb0e4de4bcb941623bccda3b695.r2.dev" crossorigin>
   <!-- 预加载首屏 LCP 图片，提升渲染速度 -->
   <link rel="preload" as="image" href="https://pub-3bb49bb0e4de4bcb941623bccda3b695.r2.dev/Gallery/002.webp" fetchpriority="high">
-  <!-- 预加载画廊 JSON 数据，缩短请求链（需与 script.js 的 fetch 完全匹配，勿加 crossorigin） -->
-  <link rel="preload" href="./images.json" as="fetch">
-  <title>因硕贝贝的官网 | EnsureFish</title>
+  <!-- 预加载画廊 JSON 数据，crossorigin 与 fetch 的默认凭据模式保持一致 -->
+  <link rel="preload" href="./images.json" as="fetch" crossorigin>
+  <title>因硕贝贝（EnsureFish）的个人主页</title>
 
   <!-- 主题引导脚本：同步加载，先于首帧渲染应用主题，避免闪烁 -->
   <script src="theme.js"></script>
@@ -63,14 +64,14 @@
           <h1>因硕贝贝</h1>
           <p class="subtitle">EnsureFish</p>
           <p>至善 · 至美</p>
-          <p>你好，我叫 因硕贝贝 (EnsureFish)！一个 Furry 呀！</p>
-          <p>我平时会在 <a href="https://space.bilibili.com/3546975999887513" target="_blank" rel="noopener">Bilibili</a>、抖音 上发布视频。</p>
-          <p>如果你也喜欢我制作的视频，欢迎 <a href="#contact">加入我们</a>！</p>
+          <p>你好，我是因硕贝贝（EnsureFish），一只 Furry。</p>
+          <p>我平时在 <a href="https://space.bilibili.com/3546975999887513" target="_blank" rel="noopener">Bilibili</a> 和抖音上发布视频。</p>
+          <p>如果你也喜欢我的视频，欢迎来 <a href="#contact">QQ 交流群</a>一起玩！</p>
         </div>
         <div class="hero-image">
           <!-- 首屏头像：LCP 元素，与 <head> 中的 preload 呼应，保持急切加载 -->
           <img src="https://pub-3bb49bb0e4de4bcb941623bccda3b695.r2.dev/Gallery/002.webp" 
-            alt="因硕贝贝的自设形象" 
+            alt="因硕贝贝的设子形象" 
             width="320" height="320" 
             fetchpriority="high">
         </div>
@@ -79,31 +80,36 @@
       <!-- 画廊 -->
       <section class="section" id="gallery">
         <h2><span class="section-icon icon-copy" aria-hidden="true"></span>画廊</h2>
-        <p>这是我拍摄的照片</p>
+        <p>这里是我拍的照片。</p>
         <div class="gallery" id="gallery_1"></div>
       </section>
 
       <!-- 设子 -->
       <section class="section" id="fursona">
-        <h2><span class="section-icon icon-draw" aria-hidden="true"></span>设定展示</h2>
-        <p>这是我的自设！</p>
+        <h2><span class="section-icon icon-draw" aria-hidden="true"></span>我的设子</h2>
+        <p>这是我的设子，也是我在网上的形象。</p>
         <div class="gallery" id="gallery_2"></div>
       </section>
 
       <!-- 联系 -->
       <section class="section" id="contact">
-        <h2><span class="section-icon icon-phone" aria-hidden="true"></span>联系我们</h2>
-        <p>如果你喜欢我们的作品或对我们的作品有意见或建议，欢迎联系我们！</p>
+        <h2><span class="section-icon icon-phone" aria-hidden="true"></span>联系我</h2>
+        <p>如果你喜欢我的作品，或者有任何意见或建议，都欢迎联系我！</p>
         <ul class="contact-list">
           <li><span class="section-icon icon-link" aria-hidden="true"></span><a href="https://qun.qq.com/universal-share/share?ac=1&authKey=fGtbNWB8%2BhKvTCtJYaZNSEK3AADbcnYSFBR2N4G%2BbuwLK4mECunrBGglQWTHFO%2BW&busi_data=eyJncm91cENvZGUiOiI5MDMzOTMwMTIiLCJ0b2tlbiI6IkhKUUROWmxlODdkU09Yc29kbXZsZU9yMGdjTFF4S201TFp3UFlXeFl3c1BWNy9Ha0dMMXNldVJnTjVpR1VmdEIiLCJ1aW4iOiIxNTkwMjE5Mjk5In0%3D&data=HEM42gnyhhyVTzVLpcSByTM01UmutHzFWJ4dZpioxN8xyL_9owW5aiCp0expp3ZQNybie4vvs7OkYfc91cnGsQ&svctype=4&tempid=h5_group_info" target="_blank" rel="noopener">QQ 交流群</a></li>
-          <li><span class="section-icon icon-link" aria-hidden="true"></span><a href="https://github.com/SZQ2268/EnsureFish">GitHub 仓库</a></li>
+          <li><span class="section-icon icon-link" aria-hidden="true"></span><a href="https://github.com/SZQ2268/EnsureFish" target="_blank" rel="noopener">GitHub 仓库</a></li>
         </ul>
       </section>
     </main>
     
     <footer>
-      <p>2026 &copy; 保留所有权利</p>
-      <p>感谢 <a href="https://github.com/SZQ2268" target="_blank" rel="noopener">沈志清</a> 提供技术支持</p>
+      <nav class="lang-switch" aria-label="语言">
+        <span class="lang-current" aria-current="page" lang="zh-CN">中文</span>
+        <a href="./en.html" hreflang="en" lang="en">English</a>
+        <a href="./ja.html" hreflang="ja" lang="ja">日本語</a>
+      </nav>
+      <p>&copy; 2026 EnsureFish · 保留所有权利</p>
+      <p>感谢<a href="https://github.com/SZQ2268" target="_blank" rel="noopener">沈志清</a>提供技术支持</p>
     </footer>
   </div>
 

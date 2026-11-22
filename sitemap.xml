@@ -3,17 +3,28 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://ensurefish.pages.dev/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-22</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ensurefish.pages.dev/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ensurefish.pages.dev/en.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ensurefish.pages.dev/ja.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ensurefish.pages.dev/"/>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://ensurefish.pages.dev/en.html</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-22</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ensurefish.pages.dev/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ensurefish.pages.dev/en.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ensurefish.pages.dev/ja.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ensurefish.pages.dev/"/>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ensurefish.pages.dev/ja.html</loc>
+    <lastmod>2026-11-22</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ensurefish.pages.dev/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ensurefish.pages.dev/en.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ensurefish.pages.dev/ja.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ensurefish.pages.dev/"/>
     <priority>0.8</priority>
   </url>

@@ -5,33 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#ffffff">
-  <meta name="description" content="EnsureFish's personal site - photography, fursona and contact info.">
+  <meta name="description" content="EnsureFish — a furry who loves making videos and taking photos. Here you'll find my photography, my fursona, and ways to get in touch.">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="EnsureFish's Personal Site">
-  <meta property="og:description" content="The Good, the Beautiful">
+  <meta property="og:title" content="EnsureFish | Personal Site">
+  <meta property="og:description" content="EnsureFish — a furry who loves making videos and taking photos. Here you'll find my photography, my fursona, and ways to get in touch.">
   <meta property="og:url" content="https://ensurefish.pages.dev/en.html">
   <meta property="og:image" content="https://pub-3bb49bb0e4de4bcb941623bccda3b695.r2.dev/Gallery/002.webp">
   <meta property="og:image:alt" content="EnsureFish's fursona">
   <link rel="canonical" href="https://ensurefish.pages.dev/en.html">
-  <link rel="alternate" hreflang="zh-CN" href="https://ensurefish.pages.dev/">
   <link rel="alternate" hreflang="en" href="https://ensurefish.pages.dev/en.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://ensurefish.pages.dev/">
+  <link rel="alternate" hreflang="ja" href="https://ensurefish.pages.dev/ja.html">
   <link rel="alternate" hreflang="x-default" href="https://ensurefish.pages.dev/">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <title>EnsureFish's Personal Site</title>
+  <title>EnsureFish | Personal Site</title>
 
   <!-- 预连接图片域名，画廊图片共用 -->
   <link rel="preconnect" href="https://pub-3bb49bb0e4de4bcb941623bccda3b695.r2.dev" crossorigin>
-  <!-- 预加载画廊 JSON 数据（需与 script.js 的 fetch 完全匹配，勿加 crossorigin） -->
-  <link rel="preload" href="./images.json" as="fetch">
+  <!-- 预加载首屏 LCP 图片，提升渲染速度 -->
+  <link rel="preload" as="image" href="https://pub-3bb49bb0e4de4bcb941623bccda3b695.r2.dev/Gallery/002.webp" fetchpriority="high">
+  <!-- 预加载画廊 JSON 数据，crossorigin 与 fetch 的默认凭据模式保持一致 -->
+  <link rel="preload" href="./images.json" as="fetch" crossorigin>
 
   <!-- 主题引导脚本：同步加载，先于首帧渲染应用主题，避免闪烁 -->
   <script src="theme.js"></script>
 
-  <!-- 字体：先 preconnect，样式表改为异步加载，不阻塞首屏渲染 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet"></noscript>
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -61,38 +62,53 @@
 
   <div class="big_card">
     <main id="main">
-      <section class="section">
-        <h1>EnsureFish's Personal Site!</h1>
-        <p>The Good, the Beautiful</p>
-        <p>Hello! I am EnsureFish, a furry!</p>
-        <p>I usually post videos on <a href="https://space.bilibili.com/3546975999887513" target="_blank" rel="noopener">Bilibili</a> and Douyin.</p>
-        <p>If you like my videos, feel free to <a href="#contact">get in touch!</a></p>
+      <!-- Hero / first screen -->
+      <section class="hero">
+        <div class="hero-content">
+          <h1>EnsureFish</h1>
+          <p class="subtitle">Goodness and Beauty</p>
+          <p>Hello! I'm a furry who loves making videos and taking photos.</p>
+          <p>You'll find my videos on <a href="https://space.bilibili.com/3546975999887513" target="_blank" rel="noopener">Bilibili</a> and Douyin.</p>
+          <p>If you enjoy my videos, come say hi in my <a href="#contact">QQ group</a>!</p>
+        </div>
+        <div class="hero-image">
+          <!-- First-screen portrait: LCP element, paired with the preload in <head> -->
+          <img src="https://pub-3bb49bb0e4de4bcb941623bccda3b695.r2.dev/Gallery/002.webp"
+            alt="EnsureFish's fursona"
+            width="320" height="320"
+            fetchpriority="high">
+        </div>
       </section>
 
       <section class="section" id="gallery">
         <h2><span class="section-icon icon-copy" aria-hidden="true"></span>Gallery</h2>
-        <p>These are the photos I took:</p>
+        <p>Here's some of my photography:</p>
         <div class="gallery" id="gallery_1"></div>
       </section>
 
       <section class="section" id="fursona">
         <h2><span class="section-icon icon-draw" aria-hidden="true"></span>Fursona</h2>
-        <p>This is my fursona!</p>
+        <p>This is my fursona — my online self.</p>
         <div class="gallery" id="gallery_2"></div>
       </section>
 
       <section class="section" id="contact">
         <h2><span class="section-icon icon-phone" aria-hidden="true"></span>Contact</h2>
-        <p>If you like our work or have any feedback, please feel free to contact us!</p>
+        <p>If you like my work or have any feedback, I'd love to hear from you!</p>
         <ul class="contact-list">
-          <li><span class="section-icon icon-link" aria-hidden="true"></span><a href="https://qun.qq.com/universal-share/share?ac=1&authKey=fGtbNWB8%2BhKvTCtJYaZNSEK3AADbcnYSFBR2N4G%2BbuwLK4mECunrBGglQWTHFO%2BW&busi_data=eyJncm91cENvZGUiOiI5MDMzOTMwMTIiLCJ0b2tlbiI6IkhKUUROWmxlODdkU09Yc29kbXZsZU9yMGdjTFF4S201TFp3UFlXeFl3c1BWNy9Ha0dMMXNldVJnTjVpR1VmdEIiLCJ1aW4iOiIxNTkwMjE5Mjk5In0%3D&data=HEM42gnyhhyVTzVLpcSByTM01UmutHzFWJ4dZpioxN8xyL_9owW5aiCp0expp3ZQNybie4vvs7OkYfc91cnGsQ&svctype=4&tempid=h5_group_info" target="_blank" rel="noopener">QQ</a></li>
-          <li><span class="section-icon icon-link" aria-hidden="true"></span><a href="https://github.com/SZQ2268/EnsureFish" target="_blank" rel="noopener">GitHub</a></li>
+          <li><span class="section-icon icon-link" aria-hidden="true"></span><a href="https://qun.qq.com/universal-share/share?ac=1&authKey=fGtbNWB8%2BhKvTCtJYaZNSEK3AADbcnYSFBR2N4G%2BbuwLK4mECunrBGglQWTHFO%2BW&busi_data=eyJncm91cENvZGUiOiI5MDMzOTMwMTIiLCJ0b2tlbiI6IkhKUUROWmxlODdkU09Yc29kbXZsZU9yMGdjTFF4S201TFp3UFlXeFl3c1BWNy9Ha0dMMXNldVJnTjVpR1VmdEIiLCJ1aW4iOiIxNTkwMjE5Mjk5In0%3D&data=HEM42gnyhhyVTzVLpcSByTM01UmutHzFWJ4dZpioxN8xyL_9owW5aiCp0expp3ZQNybie4vvs7OkYfc91cnGsQ&svctype=4&tempid=h5_group_info" target="_blank" rel="noopener">QQ Group</a></li>
+          <li><span class="section-icon icon-link" aria-hidden="true"></span><a href="https://github.com/SZQ2268/EnsureFish" target="_blank" rel="noopener">GitHub Repository</a></li>
         </ul>
       </section>
     </main>
     <footer>
-      <p>2026 &copy; All rights reserved.</p>
-      <p>Thank you to <a href="https://github.com/SZQ2268" target="_blank" rel="noopener">SZQ2268</a> for technical support!</p>
+      <nav class="lang-switch" aria-label="Language">
+        <a href="./index.html" hreflang="zh-CN" lang="zh-CN">中文</a>
+        <span class="lang-current" aria-current="page" lang="en">English</span>
+        <a href="./ja.html" hreflang="ja" lang="ja">日本語</a>
+      </nav>
+      <p>&copy; 2026 EnsureFish · All rights reserved.</p>
+      <p>Thanks to <a href="https://github.com/SZQ2268" target="_blank" rel="noopener">SZQ2268</a> for technical support!</p>
     </footer>
   </div>
   <script src="script.js"></script>

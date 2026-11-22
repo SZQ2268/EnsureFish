@@ -53,6 +53,14 @@ body:lang(en) {
   font-family: 'Comic Neue', 'Comic Sans MS', cursive;
 }
 
+/* 兼容日文站：西文走系统字体，日文回退到各平台的高质量日文字体。
+   不额外加载 Web 字体，避免拖慢首屏；行高略大，长句更易读。 */
+body:lang(ja) {
+  font-family: system-ui, -apple-system, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans',
+    'Yu Gothic', 'YuGothic', 'Meiryo', 'Noto Sans JP', sans-serif;
+  line-height: 1.75;
+}
+
 p, h1, h2, ul { margin: 0; }
 ul { padding: 0; list-style: none; }
 
@@ -318,6 +326,22 @@ footer {
 }
 footer p + p { margin-top: 8px; }
 
+/* 页脚语言切换：当前语言为纯文本（aria-current），其余为链接 */
+.lang-switch {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 16px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+.lang-switch a { color: var(--text-muted); }
+.lang-switch a:hover { color: var(--accent); }
+.lang-switch .lang-current {
+  color: var(--text);
+  font-weight: 600;
+}
+
 /* ===== 11. 画廊 (升级版) ===== */
 .gallery {
   display: grid;
@@ -376,8 +400,9 @@ html[data-theme='dark'] .gallery img:hover {
 @media (max-width: 640px) {
   .top_bar { padding: 0 16px; gap: 12px; }
 
-  /* 汉堡按钮：仅小屏显示，并把主题按钮一起推到右侧 */
-  .menu-toggle { display: grid; margin-left: auto; }
+  /* 小屏只显示两个按钮：用 auto margin 把「主题 + 汉堡」一起推到右侧 */
+  .menu-toggle { display: grid; }
+  .theme-toggle { margin-left: auto; }
 
   /* 导航改为顶栏下方的下拉面板，默认收起 */
   .top_bar nav {
@@ -419,7 +444,7 @@ html[data-theme='dark'] .gallery img:hover {
   top: 0; left: 0;
   width: 600px;
   height: 600px;
-  margin-left: -300px;  /* 与 script.js 的 translate3d 配合，把圆心对准光标 */
+  margin-left: -300px;  /* 与 script.js 的位移变换配合，把圆心对准光标 */
   margin-top: -300px;
   border-radius: 50%;
   pointer-events: none; /* 关键：绝不能阻挡鼠标点击 */

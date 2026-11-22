@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="EnsureFish（エンシュアフィッシュ）は、動画撮影と写真が大好きなファーリー。撮影した写真、ファーソナ（うちの子）、連絡先を紹介しています。">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="EnsureFish | 個人サイト">
+  <meta property="og:description" content="EnsureFish（エンシュアフィッシュ）は、動画撮影と写真が大好きなファーリー。撮影した写真、ファーソナ（うちの子）、連絡先を紹介しています。">
+  <meta property="og:url" content="https://ensurefish.pages.dev/ja.html">
+  <meta property="og:image" content="https://pub-3bb49bb0e4de4bcb941623bccda3b695.r2.dev/Gallery/002.webp">
+  <meta property="og:image:alt" content="EnsureFish のファーソナ">
+  <link rel="canonical" href="https://ensurefish.pages.dev/ja.html">
+  <link rel="alternate" hreflang="ja" href="https://ensurefish.pages.dev/ja.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://ensurefish.pages.dev/">
+  <link rel="alternate" hreflang="en" href="https://ensurefish.pages.dev/en.html">
+  <link rel="alternate" hreflang="x-default" href="https://ensurefish.pages.dev/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <title>EnsureFish | 個人サイト</title>
+
+  <!-- 预连接图片域名，画廊图片共用 -->
+  <link rel="preconnect" href="https://pub-3bb49bb0e4de4bcb941623bccda3b695.r2.dev" crossorigin>
+  <!-- 预加载首屏 LCP 图片，提升渲染速度 -->
+  <link rel="preload" as="image" href="https://pub-3bb49bb0e4de4bcb941623bccda3b695.r2.dev/Gallery/002.webp" fetchpriority="high">
+  <!-- 预加载画廊 JSON 数据，crossorigin 与 fetch 的默认凭据模式保持一致 -->
+  <link rel="preload" href="./images.json" as="fetch" crossorigin>
+
+  <!-- 主题引导脚本：同步加载，先于首帧渲染应用主题，避免闪烁 -->
+  <script src="theme.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">メインコンテンツへスキップ</a>
+
+  <header class="top_bar">
+    <a class="logo" href="#" aria-label="EnsureFish ホーム">
+      <img class="logo-icon" src="favicon.svg" alt="" width="28" height="28">
+    </a>
+    <nav id="siteNav" aria-label="メインナビゲーション">
+      <ul>
+        <li><a href="#"><span class="nav-icon icon-home" aria-hidden="true"></span><span class="nav-label">ホーム</span></a></li>
+        <li><a href="#gallery"><span class="nav-icon icon-copy" aria-hidden="true"></span><span class="nav-label">ギャラリー</span></a></li>
+        <li><a href="#fursona"><span class="nav-icon icon-draw" aria-hidden="true"></span><span class="nav-label">うちの子</span></a></li>
+        <li><a href="#contact"><span class="nav-icon icon-phone" aria-hidden="true"></span><span class="nav-label">お問い合わせ</span></a></li>
+      </ul>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" type="button"
+            aria-label="テーマを切り替える" title="テーマを切り替える">
+      <span id="themeIcon">🌙</span>
+    </button>
+    <button class="menu-toggle" id="menuToggle" type="button"
+            aria-label="メニューを開く" aria-expanded="false" aria-controls="siteNav">
+      <span class="nav-icon icon-menu" aria-hidden="true"></span>
+    </button>
+  </header>
+
+  <div class="big_card">
+    <main id="main">
+      <!-- Hero / first screen -->
+      <section class="hero">
+        <div class="hero-content">
+          <h1>EnsureFish</h1>
+          <p class="subtitle">至善・至美</p>
+          <p>こんにちは、EnsureFish です。動画や写真を撮るのが大好きなファーリーです。</p>
+          <p>普段は <a href="https://space.bilibili.com/3546975999887513" target="_blank" rel="noopener">Bilibili</a> と抖音（Douyin）で動画を投稿しています。</p>
+          <p>もし動画を気に入っていただけたら、ぜひ <a href="#contact">QQ 交流グループ</a>に遊びに来てください！</p>
+        </div>
+        <div class="hero-image">
+          <!-- First-screen portrait: LCP element, paired with the preload in <head> -->
+          <img src="https://pub-3bb49bb0e4de4bcb941623bccda3b695.r2.dev/Gallery/002.webp"
+            alt="EnsureFish のファーソナ"
+            width="320" height="320"
+            fetchpriority="high">
+        </div>
+      </section>
+
+      <section class="section" id="gallery">
+        <h2><span class="section-icon icon-copy" aria-hidden="true"></span>ギャラリー</h2>
+        <p>ここでは、撮りためた写真を公開しています。</p>
+        <div class="gallery" id="gallery_1"></div>
+      </section>
+
+      <section class="section" id="fursona">
+        <h2><span class="section-icon icon-draw" aria-hidden="true"></span>うちの子</h2>
+        <p>こちらが私のファーソナ（うちの子）で、ネット上での姿です。</p>
+        <div class="gallery" id="gallery_2"></div>
+      </section>
+
+      <section class="section" id="contact">
+        <h2><span class="section-icon icon-phone" aria-hidden="true"></span>お問い合わせ</h2>
+        <p>作品を気に入ってくださった方も、ご意見やご感想がある方も、お気軽にご連絡ください！</p>
+        <ul class="contact-list">
+          <li><span class="section-icon icon-link" aria-hidden="true"></span><a href="https://qun.qq.com/universal-share/share?ac=1&authKey=fGtbNWB8%2BhKvTCtJYaZNSEK3AADbcnYSFBR2N4G%2BbuwLK4mECunrBGglQWTHFO%2BW&busi_data=eyJncm91cENvZGUiOiI5MDMzOTMwMTIiLCJ0b2tlbiI6IkhKUUROWmxlODdkU09Yc29kbXZsZU9yMGdjTFF4S201TFp3UFlXeFl3c1BWNy9Ha0dMMXNldVJnTjVpR1VmdEIiLCJ1aW4iOiIxNTkwMjE5Mjk5In0%3D&data=HEM42gnyhhyVTzVLpcSByTM01UmutHzFWJ4dZpioxN8xyL_9owW5aiCp0expp3ZQNybie4vvs7OkYfc91cnGsQ&svctype=4&tempid=h5_group_info" target="_blank" rel="noopener">QQ 交流グループ</a></li>
+          <li><span class="section-icon icon-link" aria-hidden="true"></span><a href="https://github.com/SZQ2268/EnsureFish" target="_blank" rel="noopener">GitHub リポジトリ</a></li>
+        </ul>
+      </section>
+    </main>
+    <footer>
+      <nav class="lang-switch" aria-label="言語">
+        <a href="./index.html" hreflang="zh-CN" lang="zh-CN">中文</a>
+        <a href="./en.html" hreflang="en" lang="en">English</a>
+        <span class="lang-current" aria-current="page" lang="ja">日本語</span>
+      </nav>
+      <p>&copy; 2026 EnsureFish · All rights reserved.</p>
+      <p>技術サポートを提供してくださった <a href="https://github.com/SZQ2268" target="_blank" rel="noopener">沈志清</a> さんに感謝します。</p>
+    </footer>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

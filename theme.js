@@ -2,7 +2,7 @@
    EnsureFish 主题模块（亮 / 暗 + 跟随系统）
    在 <head> 中同步加载，先于首帧渲染应用主题，避免闪烁 (FOUC)。
    主题按钮通过事件委托绑定，因此可以在 head 阶段运行。
-   全站（index / en / 404）共用这一份实现，避免三处内联脚本漂移。
+   全站（index / en / ja / 404）共用这一份实现，避免多处内联脚本漂移。
    ========================================================= */
 (function () {
   'use strict';
@@ -10,8 +10,21 @@
   var STORAGE_KEY = 'theme';
   var THEME_COLORS = { light: '#ffffff', dark: '#0f1115' };
   var root = document.documentElement;
-  var isEnglish = (root.lang || '').toLowerCase().indexOf('en') === 0;
-  var mql = window.matchMedia('(prefers-color-scheme: dark)');
+  /* 语言取 <html lang> 的首段（zh-CN → zh），按钮文案据此切换 */
+  var lang = (root.lang || '').toLowerCase().split('-')[0];
+
+  /* 主题按钮文案；未收录的语言回退中文 */
+  var THEME_LABELS = {
+    zh: { toLight: '切换到浅色模式', toDark: '切换到深色模式' },
+    en: { toLight: 'Switch to light mode', toDark: 'Switch to dark mode' },
+    ja: { toLight: 'ライトモードに切り替える', toDark: 'ダークモードに切り替える' }
+  };
+  var labels = THEME_LABELS[lang] || THEME_LABELS.zh;
+  /* 极老浏览器可能没有 matchMedia：此时无法跟随系统主题，
+     退化为按保存值 / 亮色处理，避免在这里抛错导致整个模块失效。 */
+  var mql = typeof window.matchMedia === 'function'
+    ? window.matchMedia('(prefers-color-scheme: dark)')
+    : null;
 
   /* meta[name="theme-color"] 位于本脚本之前，可直接缓存复用 */
   var themeMeta = document.querySelector('meta[name="theme-color"]');
@@ -29,7 +42,7 @@
   } catch (e) { /* ignore */ }
 
   function resolveTheme() {
-    return saved || (mql.matches ? 'dark' : 'light');
+    return saved || (mql && mql.matches ? 'dark' : 'light');
   }
 
   /* ---- 应用主题 ----
@@ -48,9 +61,7 @@
 
     var btn = document.getElementById('themeToggle');
     if (btn) {
-      var label = theme === 'dark'
-        ? (isEnglish ? 'Switch to light mode' : '切换到浅色模式')
-        : (isEnglish ? 'Switch to dark mode' : '切换到深色模式');
+      var label = theme === 'dark' ? labels.toLight : labels.toDark;
       btn.setAttribute('aria-label', label);
       btn.title = label;
     }
@@ -82,12 +93,14 @@
 
   /* 系统主题变化：仅在用户未手动选择时跟随 */
   function onSystemChange() {
-    if (!saved) apply(mql.matches ? 'dark' : 'light');
+    if (!saved) apply(mql && mql.matches ? 'dark' : 'light');
   }
-  if (typeof mql.addEventListener === 'function') {
-    mql.addEventListener('change', onSystemChange);
-  } else if (typeof mql.addListener === 'function') { // 旧版 Safari
-    mql.addListener(onSystemChange);
+  if (mql) {
+    if (typeof mql.addEventListener === 'function') {
+      mql.addEventListener('change', onSystemChange);
+    } else if (typeof mql.addListener === 'function') { // 旧版 Safari
+      mql.addListener(onSystemChange);
+    }
   }
 
   /* 跨标签页同步：其他标签页切换主题时本页跟随。
